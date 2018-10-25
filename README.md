@@ -1,2 +1,2 @@
 # Controlberry
-Control of Raspberry Pi and sensors via MongoDB
+Package which needs to be installed on Raspberry Pi to be able to control it via Flaskberry
