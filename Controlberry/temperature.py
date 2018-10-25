@@ -62,7 +62,8 @@ def insert_into_database():
     insert data into database
     '''
     data = get_data()
-    Temperature.insert({'Timestamp': datetime.datetime.utcnow(), 'Temperature':data})
+    if data:
+        Temperature.insert({'Timestamp': datetime.datetime.utcnow(), 'Temperature':data})
 
 def run_every_interval(interval = 1):
     '''
