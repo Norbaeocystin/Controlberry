@@ -25,10 +25,7 @@ To download zip to your raspberry https://codeload.github.com/Norbaeocystin/Cont
      * screen python3 control.py
  
  ## To do list
- - [ ] users dashboard
- - [x] settings dashboard, but still needs imrpo
- - [ ] compiled versions
- - [ ] better design
+ - [ ] documentation
  - [ ] add more sensors
  - [ ] add timing options
- - [ ] notifications (SMS, email, facebook, alerts)
+
