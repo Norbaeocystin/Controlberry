@@ -15,12 +15,12 @@ import json
 import logging
 from pymongo import MongoClient
 import RPi.GPIO as GPIO
-from temperature import run_every_interval
+from .temperature import run_every_interval
 import time
 from threading import Thread
 
-from distance import distance
-from LED import running, get_light, get_light_stop
+from .distance import distance
+from .LED import running, get_light, get_light_stop
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
