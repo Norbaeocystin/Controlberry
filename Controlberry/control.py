@@ -21,31 +21,35 @@ from threading import Thread
 
 from .distance import distance
 from .LED import running, get_light, get_light_stop
+import pkg_resources
+
+Config = pkg_resources.resource_filename('Flaskberry', 'Config/config.json')
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 #loads config file
-json_data= open('config.json').read()
+json_data= open(Config).read()
 DATABASE = json.loads(json_data)
 URI = DATABASE.get('URI')
 DB = DATABASE.get('Database')
+
+#if URI doesnt exits it will write data to config.json
 if not URI:
-	URI = input("Please write your connection MongoDB URI and press Enter: \n")
-	DB = input("Please write name of your Database: \n")
-	with open('config.json', 'w') as outfile:
-    	json.dump({'URI':URI,'DB':DB}, outfile)
-		
-json_data= open('config.json').read()
+    URI = input("Please write your connection MongoDB URI and press Enter: \n")
+    DB = input("Please write name of your Database: \n")
+    with open(Config, 'w') as outfile:
+        json.dump({'URI':URI,'Database':DB}, outfile)
+
+json_data= open(Config).read()
 DATABASE = json.loads(json_data)
 URI = DATABASE.get('URI')
 DB = DATABASE.get('Database')
-		
-			   
-#setup mongodb
 CONNECTION = MongoClient(URI, connect = False)
 db = CONNECTION.get_database(DB)
+Temperature = db.Temperature
 Commands = db.Commands
+Settings = db.Settings
 
 def no_arg(func, instances = 1):
     '''
