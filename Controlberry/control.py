@@ -30,7 +30,18 @@ json_data= open('config.json').read()
 DATABASE = json.loads(json_data)
 URI = DATABASE.get('URI')
 DB = DATABASE.get('Database')
-
+if not URI:
+	URI = input("Please write your connection MongoDB URI and press Enter: \n")
+	DB = input("Please write name of your Database: \n")
+	with open('config.json', 'w') as outfile:
+    	json.dump({'URI':URI,'DB':DB}, outfile)
+		
+json_data= open('config.json').read()
+DATABASE = json.loads(json_data)
+URI = DATABASE.get('URI')
+DB = DATABASE.get('Database')
+		
+			   
 #setup mongodb
 CONNECTION = MongoClient(URI, connect = False)
 db = CONNECTION.get_database(DB)
