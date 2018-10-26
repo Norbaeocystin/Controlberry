@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="controlberry_pkg",
+    name="controlberry",
     install_requires=["pymongo","Adafruit_DHT"],
     version="0.0.1",
     author="Rastislav_Baran",
