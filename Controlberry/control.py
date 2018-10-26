@@ -70,6 +70,10 @@ def watch_collection():
                 dist = distance(doc.get('Name'))
                 logger.info('Distance: {} for _id:{}'.format(dist, _id))
                 Commands.update({'_id':_id},{'$set':{'DISTANCE':dist}})
+             
+def run():
+    no_arg(watch_collection)
+    no_arg(run_every_interval)
 
 if __name__ == '__main__':
     no_arg(watch_collection)
