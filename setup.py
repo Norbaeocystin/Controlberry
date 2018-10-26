@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="controlberry_pkg",
-    install_requires=["pymongo","RPi","Adafruit_DHT"],
+    install_requires=["pymongo","python-rpi.gpio","Adafruit_DHT"],
     version="0.0.1",
     author="Rastislav_Baran",
     author_email="baranrastislav@gmail.com",
