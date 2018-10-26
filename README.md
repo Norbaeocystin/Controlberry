@@ -13,7 +13,7 @@ it works by watching changes in MongoDB collections, what means you can use data
 sudo apt-get update
 sudo pip3 install git+git://github.com/Norbaeocystin/Controlberry.git
 #write connection MongoDB URI and Database to config.json
-controlberry #or via terminal remotely use screen controberry
+controlberry #or via terminal remotely use screen controlberry
 ```
  
  ## To do list
