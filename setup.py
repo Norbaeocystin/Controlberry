@@ -13,7 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     package_data={'Controlberry': ['*.json']},
-    entry_points={'console_scripts':['controlberry = Controlberry.control']},
+    entry_points={'console_scripts':['controlberry = Controlberry.control:run']},
     url="",
     packages=setuptools.find_packages(),
     classifiers=[
