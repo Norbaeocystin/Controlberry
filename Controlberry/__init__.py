@@ -1,1 +1,1 @@
-ifrom .control import *
+from .control import *
