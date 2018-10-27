@@ -32,26 +32,26 @@ DB = DATABASE.get('Database')
 CONNECTION = MongoClient(URI, connect = False)
 db = CONNECTION.get_database(DB)
 Settings = db.Settings.find_one({"_id":0},{'_id':0})
+Adafruit = db.Adafruit
 
 def get_adafruit_sensors(Settings):
-	adafruitSensors = [item for item in Settings.keys() if 'AdafruitName']
-	return adafruitSensors
+    adafruitSensors = [item for item in Settings.keys() if 'AdafruitName']
+    return adafruitSensors
 
 def get_data(sensor, pin):
-	humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-	return {"Humidity":humidity, "Temperature":temperature}
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    return {"Humidity":humidity, "Temperature":temperature}
 
 def get_data_for_sensors():
-	Settings = db.Settings.find_one({"_id":0},{'_id':0})
-	sensors = get_adafruit_sensors(Settings)
-	result = {}
+    sensors = get_adafruit_sensors()
+    result = {}
         for item in sensors:
-		sensor = sensor_args.get(Settings[item.replace('Name','Type')])
-		pin = Settings[item.replace('Name','Pin')]
-		data = get_data(sensor, pin)
-		result[item] = data
-	return result
-		
+        sensor = sensor_args.get(Settings[item.replace('Name','Type')])
+        pin = Settings[item.replace('Name','Pin')]
+        data = get_data(sensor, pin)
+        result[item] = data
+    return result
+
 def insert_into_database():
     '''
     insert data into database
@@ -69,4 +69,4 @@ def run_every_interval_adafruit(interval = 10):
         time.sleep(interval)
 
 if __name__ == '__main__':
-   run_every_interval_adafruit()
+    run_every_interval_adafruit()
