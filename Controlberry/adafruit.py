@@ -4,6 +4,7 @@ to control adafruit  sensors for temperature and humidity
 import Adafruit_DHT
 import json
 import pkg_resources
+from pymongo import MongoClient
 import time
 
 Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
