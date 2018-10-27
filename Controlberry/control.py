@@ -23,7 +23,7 @@ from .distance import distance
 from .LED import running, get_light, get_light_stop
 import pkg_resources
 
-Config = pkg_resources.resource_filename('Flaskberry', 'Config/config.json')
+Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
