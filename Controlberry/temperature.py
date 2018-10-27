@@ -8,8 +8,11 @@ import time
 import datetime
 from pymongo import MongoClient
 
+import pkg_resources
+
+Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
 #loads config file
-json_data= open('config.json').read()
+json_data= open(Config).read()
 DATABASE = json.loads(json_data)
 URI = DATABASE.get('URI')
 DB = DATABASE.get('Database')
