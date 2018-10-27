@@ -2,7 +2,9 @@
 to control adafruit  sensors for temperature and humidity
 """
 import Adafruit_DHT
+import pkg_resources
 
+Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
 
 # Parse command line parameters.
 sensor_args = { '11': Adafruit_DHT.DHT11,
