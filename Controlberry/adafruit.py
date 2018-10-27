@@ -45,11 +45,11 @@ def get_data(sensor, pin):
 def get_data_for_sensors():
     sensors = get_adafruit_sensors()
     result = {}
-        for item in sensors:
-            sensor = sensor_args.get(Settings[item.replace('Name','Type')])
-            pin = Settings[item.replace('Name','Pin')]
-            data = get_data(sensor, pin)
-            result[item] = data
+    for item in sensors:
+        sensor = sensor_args.get(Settings[item.replace('Name','Type')])
+        pin = Settings[item.replace('Name','Pin')]
+        data = get_data(sensor, pin)
+        result[item] = data
     return result
 
 def insert_into_database():
