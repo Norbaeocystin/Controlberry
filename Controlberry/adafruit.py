@@ -36,7 +36,7 @@ db = CONNECTION.get_database(DB)
 Settings = db.Settings.find_one({"_id":0},{'_id':0})
 Adafruit = db.Adafruit
 
-def get_adafruit_sensors(Settings):
+def get_adafruit_sensors(Settings = Settings):
     adafruitSensors = [item for item in Settings.keys() if 'AdafruitName']
     return adafruitSensors
 
