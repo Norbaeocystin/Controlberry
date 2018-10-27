@@ -10,9 +10,9 @@ import time
 Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
 
 # Parse command line parameters.
-sensor_args = { '11': Adafruit_DHT.DHT11,
-                '22': Adafruit_DHT.DHT22,
-                '2302': Adafruit_DHT.AM2302 }
+sensor_args = { 'DHT11': Adafruit_DHT.DHT11,
+                'DHT22': Adafruit_DHT.DHT22,
+                'AM2302': Adafruit_DHT.AM2302 }
 
 #loads config file
 json_data= open(Config).read()
