@@ -15,6 +15,7 @@ import json
 import logging
 from pymongo import MongoClient
 import RPi.GPIO as GPIO
+from .adafruit import run_every_interval_adafruit
 from .temperature import run_every_interval
 import time
 from threading import Thread
@@ -85,11 +86,13 @@ def watch_collection():
                 dist = distance(doc.get('Name'))
                 logger.info('Distance: {} for _id:{}'.format(dist, _id))
                 Commands.update({'_id':_id},{'$set':{'DISTANCE':dist}})
-             
+
 def run():
     no_arg(watch_collection)
     no_arg(run_every_interval)
+    no_arg(run_every_interval_adafruit)
 
 if __name__ == '__main__':
     no_arg(watch_collection)
     no_arg(run_every_interval)
+    no_arg(run_every_interval_adafruit)
