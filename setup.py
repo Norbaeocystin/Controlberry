@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="controlberry",
-    install_requires=["pymongo","Adafruit_DHT"],
+    install_requires=["pymongo","Adafruit_DHT","dnspython"],
     version="0.0.1",
     author="Rastislav_Baran",
     author_email="baranrastislav@gmail.com",
