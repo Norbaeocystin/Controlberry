@@ -3,6 +3,7 @@ to control adafruit  sensors for temperature and humidity
 """
 import Adafruit_DHT
 import pkg_resources
+import time
 
 Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
 
@@ -41,5 +42,31 @@ def get_data(sensor, pin):
 	return {"Humidity":humidity, "Temperature":temperature}
 
 def get_data_for_sensors():
-	Setting = db.Settings.find_one({"_id":0},{'_id':0})
+	Settings = db.Settings.find_one({"_id":0},{'_id':0})
 	sensors = get_adafruit_sensors(Settings)
+	result = {}
+        for item in sensors:
+		sensor = sensor_args.get(Settings[item.replace('Name','Type')])
+		pin = Settings[item.replace('Name','Pin')]
+		data = get_data(sensor, pin)
+		result[item] = data
+	return result
+		
+def insert_into_database():
+    '''
+    insert data into database
+    '''
+    data = get_data_for_sensors()
+    if data:
+        Adafruit.insert({'Timestamp': datetime.datetime.utcnow(), 'Temperature':data})
+
+def run_every_interval_adafruit(interval = 10):
+    '''
+    get data from insert_into_database and store them in collection loops in defined interval
+    '''
+    while True:
+        insert_into_database()
+        time.sleep(interval)
+
+if __name__ == '__main__':
+   run_every_interval_adafruit()
