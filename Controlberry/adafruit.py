@@ -2,6 +2,7 @@
 to control adafruit  sensors for temperature and humidity
 """
 import Adafruit_DHT
+import json
 import pkg_resources
 import time
 
