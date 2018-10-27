@@ -37,7 +37,7 @@ Settings = db.Settings.find_one({"_id":0},{'_id':0})
 Adafruit = db.Adafruit
 
 def get_adafruit_sensors(Settings = Settings):
-    adafruitSensors = [item for item in Settings.keys() if 'AdafruitName']
+    adafruitSensors = [item for item in Settings.keys() if 'AdafruitName' in item]
     return adafruitSensors
 
 def get_data(sensor, pin):
