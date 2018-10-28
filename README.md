@@ -2,7 +2,7 @@
 Application to control Raspberry Pi 3 B+ sensors,
 it works by watching changes in MongoDB collections, what means you can use database which is running localy or on server for remote connections.
  
- For remote control it is possible to use free tier [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) ( you cant use free tier [mlab](https://mlab.com/) because it doesn't support .watch()).
+ For remote control it is possible to use free tier [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) ( you cant use free tier [mlab](https://mlab.com/) because it doesn't support .watch(), shortly you need MongoDB version >= 4.0).
  
  To fully use Controlberry you need to install:
     * install [MongoDB](https://docs.mongodb.com/manual/installation/) locally or on server
