@@ -10,7 +10,6 @@ def get_image_as_bytes():
     stream = BytesIO()
     try:
         camera = PiCamera()
-        running['camera'] = camera
         camera.start_preview()
         sleep(1.3)
         camera.capture(stream, format='jpeg')
