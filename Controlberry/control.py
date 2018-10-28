@@ -10,12 +10,13 @@ how to construct JSON to control Raspberry pi
  
  
 '''
-
+import datetime
 import json
 import logging
 from pymongo import MongoClient
 import RPi.GPIO as GPIO
 from .adafruit import run_every_interval_adafruit
+from .control import get_image_as_bytes
 from .temperature import run_every_interval
 import time
 from threading import Thread
@@ -86,6 +87,11 @@ def watch_collection():
                 dist = distance(doc.get('Name'))
                 logger.info('Distance: {} for _id:{}'.format(dist, _id))
                 Commands.update({'_id':_id},{'$set':{'DISTANCE':dist}})
+            if doc.get('Command') == 'CAMERA':
+                logger.info('Camera command received')
+                picture_bites = get_image_as_bytes()
+                logger.info('Picture taken for _id:{}'.format(_id))
+                Commands.update({'_id':_id},{'$set':{'PICTURE':picture_bytes},'Timestamp':datetime.datetime.now()})
 
 def run():
     no_arg(watch_collection)
