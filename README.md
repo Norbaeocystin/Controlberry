@@ -6,7 +6,7 @@ it works by watching changes in MongoDB collections, what means you can use data
  
  To fully use Controlberry you need to install:
     * install [MongoDB](https://docs.mongodb.com/manual/installation/) locally or on server
-    * install [Controlberry](https://github.com/Norbaeocystin/Controlberry) on your PCs or you can deploy it as web app on [Pythonanywhere](https://www.pythonanywhere.com/)
+    * install [Flaskberry](https://github.com/Norbaeocystin/Flaskberry) on your PCs or you can deploy it as web app on [Pythonanywhere](https://www.pythonanywhere.com/)
  
  ## Notes:
    * if you want Flask app deploy change in main.py app.run(debug=True) to app.run()
