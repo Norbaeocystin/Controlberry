@@ -63,7 +63,7 @@ for item in ['Commands','Temperature', 'Adafruit', 'Distance','Pictures']:
             db.command({"convertToCapped": item, "size": 10000000});
             print('{} changed to capped collection'.format(item))
     except OperationFailure:
-pass
+        pass
 
 def no_arg(func, instances = 1):
     '''
