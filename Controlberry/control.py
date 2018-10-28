@@ -14,6 +14,7 @@ import datetime
 import json
 import logging
 from pymongo import MongoClient
+from pymongo.errors import OperationFailure
 import RPi.GPIO as GPIO
 from .adafruit import run_every_interval_adafruit
 from .camera import get_image_as_bytes
@@ -54,6 +55,15 @@ Commands = db.Commands
 Settings = db.Settings
 Distance = db.Distance
 Pictures = db.Pictures
+
+for item in ['Commands','Temperature', 'Adafruit', 'Distance','Pictures']:
+    try:
+        if not db.command('collstats',item).get('capped', False):
+            print('Not capped')
+            db.command({"convertToCapped": item, "size": 10000000});
+            print('{} changed to capped collection'.format(item))
+    except OperationFailure:
+pass
 
 def no_arg(func, instances = 1):
     '''
