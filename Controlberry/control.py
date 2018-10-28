@@ -91,7 +91,7 @@ def watch_collection():
                 logger.info('Camera command received')
                 picture_bytes = get_image_as_bytes()
                 logger.info('Picture taken for _id:{}'.format(_id))
-                Commands.update({'_id':_id},{'$set':{'PICTURE':picture_bytes},'Timestamp':datetime.datetime.now()})
+                Commands.update({'_id':_id},{'$set':{'PICTURE':picture_bytes, 'Timestamp':datetime.datetime.now()}})
 
 def run():
     no_arg(watch_collection)
