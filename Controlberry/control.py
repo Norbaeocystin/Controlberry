@@ -52,6 +52,8 @@ db = CONNECTION.get_database(DB)
 Temperature = db.Temperature
 Commands = db.Commands
 Settings = db.Settings
+Distance = db.Distance
+Pictures = db.Pictures
 
 def no_arg(func, instances = 1):
     '''
@@ -86,12 +88,12 @@ def watch_collection():
                 logger.info('Distance command received')
                 dist = distance(doc.get('Name'))
                 logger.info('Distance: {} for _id:{}'.format(dist, _id))
-                Commands.update({'_id':_id},{'$set':{'DISTANCE':dist}})
+                Distance.insert({'_id':_id,'DISTANCE':dist}})
             if doc.get('Command') == 'CAMERA':
                 logger.info('Camera command received')
                 picture_bytes = get_image_as_bytes()
                 logger.info('Picture taken for _id:{}'.format(_id))
-                Commands.update({'_id':_id},{'$set':{'PICTURE':picture_bytes, 'Timestamp':datetime.datetime.now()}})
+                Pictures.insert({'_id':_id,'PICTURE':picture_bytes, 'Timestamp':datetime.datetime.now()})
 
 def run():
     no_arg(watch_collection)
