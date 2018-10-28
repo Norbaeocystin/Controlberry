@@ -16,7 +16,7 @@ import logging
 from pymongo import MongoClient
 import RPi.GPIO as GPIO
 from .adafruit import run_every_interval_adafruit
-from .control import get_image_as_bytes
+from .camera import get_image_as_bytes
 from .temperature import run_every_interval
 import time
 from threading import Thread
