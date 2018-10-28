@@ -4,6 +4,10 @@ it works by watching changes in MongoDB collections, what means you can use data
  
  For remote control it is possible to use free tier [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) ( you cant use free tier [mlab](https://mlab.com/) because it doesn't support .watch()).
  
+ To fully use Controlberry you need to install:
+    * install [MongoDB](https://docs.mongodb.com/manual/installation/) locally or on server
+    * install [Controlberry](https://github.com/Norbaeocystin/Controlberry) on your PCs or you can deploy it as web app on [Pythonanywhere](https://www.pythonanywhere.com/)
+ 
  ## Notes:
    * if you want Flask app deploy change in main.py app.run(debug=True) to app.run()
    * [how to install mongodb](https://docs.mongodb.com/manual/installation/)
