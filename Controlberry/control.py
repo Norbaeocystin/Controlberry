@@ -89,7 +89,7 @@ def watch_collection():
                 Commands.update({'_id':_id},{'$set':{'DISTANCE':dist}})
             if doc.get('Command') == 'CAMERA':
                 logger.info('Camera command received')
-                picture_bites = get_image_as_bytes()
+                picture_bytes = get_image_as_bytes()
                 logger.info('Picture taken for _id:{}'.format(_id))
                 Commands.update({'_id':_id},{'$set':{'PICTURE':picture_bytes},'Timestamp':datetime.datetime.now()})
 
