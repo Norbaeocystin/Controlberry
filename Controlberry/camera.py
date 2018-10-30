@@ -1,3 +1,14 @@
+'''
+short snippet 
+to take photos 
+to disable red light
+add this line :
+disable_camera_led=1
+
+to this file
+
+sudo nano /boot/config.txt
+'''
 import logging
 from io import BytesIO
 from time import sleep
