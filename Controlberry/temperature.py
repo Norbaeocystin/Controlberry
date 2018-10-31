@@ -36,7 +36,9 @@ os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 
 base_dir = '/sys/bus/w1/devices/'
-device_folders = glob.glob(base_dir + '28*')
+device_folders = glob.glob(base_dir + '*')
+device_folders = [item for item in device_folders if item.split('/')[-1][:2].isdigit()]
+
 
 def read(device_file):
     '''
