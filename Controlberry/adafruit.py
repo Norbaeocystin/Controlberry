@@ -34,7 +34,6 @@ URI = DATABASE.get('URI')
 DB = DATABASE.get('Database')
 CONNECTION = MongoClient(URI, connect = False)
 db = CONNECTION.get_database(DB)
-Settings = db.Settings.find_one({"_id":0},{'_id':0})
 Adafruit = db.Adafruit
 
 def get_adafruit_sensors():
