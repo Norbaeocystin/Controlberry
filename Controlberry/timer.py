@@ -10,6 +10,7 @@ How to construct Scheduler:
 '''
 
 from functools import partial
+from pymongo import MongoClient
 import schedule
 import time
 from threading import Thread
@@ -17,20 +18,28 @@ from threading import Thread
 from .pins import get_on_pin, get_off_pin
 from .LED import running, get_light, get_light_stop
 
-def job(name):
-    print("I'm working {}".format(name))
+Config = pkg_resources.resource_filename('Controlberry', 'Config/config.json')
 
+#loads config file
+json_data= open(Config).read()
+DATABASE = json.loads(json_data)
+URI = DATABASE.get('URI')
+DB = DATABASE.get('Database')
 
-'''
-for pins it relatively easy because only what needs to be done on and of
-for leds also needs to add brightness
-'''
-import schedule
-import time
-from threading import Thread
+#if URI doesnt exits it will write data to config.json
+if not URI:
+    URI = input("Please write your connection MongoDB URI and press Enter: \n")
+    DB = input("Please write name of your Database: \n")
+    with open(Config, 'w') as outfile:
+        json.dump({'URI':URI,'Database':DB}, outfile)
 
-def job(name, work):
-    print("{} is working in {}".format(name, work))
+json_data= open(Config).read()
+DATABASE = json.loads(json_data)
+URI = DATABASE.get('URI')
+DB = DATABASE.get('Database')
+CONNECTION = MongoClient(URI, connect = False)
+db = CONNECTION.get_database(DB)
+Schedule = db.Schedule
 
 def run_threaded(func):
     '''
