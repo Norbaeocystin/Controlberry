@@ -1,6 +1,5 @@
 '''
 how to construct JSON to control Raspberry pi
-
 {'Commands':<string>;
  'Duration':<string>;
  'Name':<string>;
@@ -22,7 +21,7 @@ from .temperature import run_every_interval
 from .pins import get_on_pin, get_off_pin
 import time
 from threading import Thread
-from .timer import setting_it_all, run_scheduler_forever
+from .timer import setting_it_all
 
 from .distance import distance
 from .LED import running, get_light, get_light_stop
@@ -131,6 +130,15 @@ def watch_scheduling_collection():
         doc = item.get('fullDocument')
         if doc:
             setting_it_all(doc)
+            
+def scheduler():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+    
+def run_scheduler_forever():
+    t = Thread(scheduler)
+    t.start()
 
 
 def run():
