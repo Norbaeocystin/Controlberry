@@ -10,6 +10,7 @@ How to construct Scheduler:
 '''
 
 from functools import partial
+import json
 import pkg_resources
 from pymongo import MongoClient
 import schedule
