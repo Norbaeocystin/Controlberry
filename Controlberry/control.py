@@ -125,7 +125,7 @@ def watch_scheduling_collection():
     '''
     checking collection if there will be inserted document which have LED in it it will light up,
     '''
-    logger.info('Starting watching Commands collection')
+    logger.info('Starting watching Schedule collection')
     watcher = Schedule.watch()
     for item in watcher:
         doc = item.get('fullDocument')
