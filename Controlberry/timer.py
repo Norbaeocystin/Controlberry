@@ -105,14 +105,14 @@ def setting_it_all(ScheduleJson):
     for item in pins:
         time_on = ScheduleJson[item]['On']
         time_off = ScheduleJson[item]['Off']
-        set_schedule(get_on_pin, time_on, [name, time_on], [name] )
-        set_schedule(get_off_pin, time_off, [name, time_off], [name] )
+        set_schedule(get_on_pin, time_on, [item, time_on], [item] )
+        set_schedule(get_off_pin, time_off, [item, time_off], [item] )
     for item in leds:
         time_on = ScheduleJson[item]['On']
         time_off = ScheduleJson[item]['Off']
         brightness = ScheduleJson[item].get('Brightness', 100)
-        def off_on(name, brightness):
-            get_light_stop(name)
-            get_light(name, brightness)
-        set_schedule(off_on, time_on, [name, time_on], [name, brightness] )
-        set_schedule(get_light_stop, time_off, [name, time_off], [name])
+        def off_on(item, brightness):
+            get_light_stop(item)
+            get_light(item, brightness)
+        set_schedule(off_on, time_on, [item, time_on], [item, brightness] )
+        set_schedule(get_light_stop, time_off, [item, time_off], [name])
