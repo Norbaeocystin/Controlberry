@@ -19,6 +19,7 @@ import RPi.GPIO as GPIO
 from .adafruit import run_every_interval_adafruit
 from .camera import get_image_as_bytes
 from .temperature import run_every_interval
+from .pins import get_on_pin, get_off_pin
 import time
 from threading import Thread
 
@@ -97,6 +98,16 @@ def watch_collection():
                 else:
                     name = doc.get('Name')
                     get_light_stop(name)
+            if doc.get('Command') == 'PIN':
+                logger.info('Pin command received')
+                if doc.get('State'):
+                    name = doc.get('Name')
+                    logger.info('Turning on {}'.format(name))
+                    get_on_pin(name)
+                else:
+                    name = doc.get('Name')
+                    logger.info('Turning off {}'.format(name))
+                    get_off_pin(name)
             if doc.get('Command') == 'DISTANCE':
                 logger.info('Distance command received')
                 dist = distance(doc.get('Name'))
