@@ -3,9 +3,9 @@ for pins it relatively easy because only what needs to be done on and of
 for leds also needs to add brightness
 
 How to construct Scheduler:
-{'PinName_1_':{'ON':10:36','OFF':11:20},
-'PinName_2_:{'ON':10:20','OFF':11:30},
-'LedName_1_':{'ON':10:20','OFF':11:30,'Brigthness':50}
+{'PinName_1_':{'On':10:36','Off':11:20},
+'PinName_2_:{'On':10:20','Off':11:30},
+'LedName_1_':{'On':10:20','Off':11:30,'Brigthness':50}
 }
 '''
 
