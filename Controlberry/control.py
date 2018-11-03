@@ -22,7 +22,7 @@ from .temperature import run_every_interval
 from .pins import get_on_pin, get_off_pin
 import time
 from threading import Thread
-from .timer import setting_it_all
+from .timer import setting_it_all, run_scheduler_forever
 
 from .distance import distance
 from .LED import running, get_light, get_light_stop
@@ -137,6 +137,7 @@ def run():
     sched = Schedule.find_one()
     if sched:
         setting_it_all(sched)
+    run_scheduler_forever()
     no_arg(watch_collection)
     no_arg(watch_scheduling_collection)
     no_arg(run_every_interval)
@@ -146,6 +147,7 @@ if __name__ == '__main__':
     sched = Schedule.find_one()
     if sched:
         setting_it_all(sched)
+    run_scheduler_forever()
     no_arg(watch_scheduling_collection)
     no_arg(watch_collection)
     no_arg(run_every_interval)
