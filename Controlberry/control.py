@@ -19,6 +19,7 @@ from .adafruit import run_every_interval_adafruit
 from .camera import get_image_as_bytes
 from .temperature import run_every_interval
 from .pins import get_on_pin, get_off_pin
+import schedule
 import time
 from threading import Thread
 from .timer import setting_it_all
@@ -131,13 +132,13 @@ def watch_scheduling_collection():
         if doc:
             setting_it_all(doc)
             
-def scheduler():
+def scheduler_():
     while True:
         schedule.run_pending()
         time.sleep(1)
     
 def run_scheduler_forever():
-    t = Thread(scheduler)
+    t = Thread(target = scheduler_)
     t.start()
 
 
