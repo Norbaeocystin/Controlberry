@@ -77,7 +77,7 @@ def delete_schedule(tags):
             
 def run_scheduler():
     while True:
-        schedule.run_all()
+        schedule.run_pending()
         time.sleep(1)
             
 def run_scheduler_forever():
