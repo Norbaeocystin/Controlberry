@@ -134,20 +134,20 @@ def watch_scheduling_collection():
 
 
 def run():
+    run_scheduler_forever()
     sched = Schedule.find_one()
     if sched:
         setting_it_all(sched)
-    run_scheduler_forever()
     no_arg(watch_collection)
     no_arg(watch_scheduling_collection)
     no_arg(run_every_interval)
     no_arg(run_every_interval_adafruit)
 
 if __name__ == '__main__':
+    run_scheduler_forever()
     sched = Schedule.find_one()
     if sched:
         setting_it_all(sched)
-    run_scheduler_forever()
     no_arg(watch_scheduling_collection)
     no_arg(watch_collection)
     no_arg(run_every_interval)
