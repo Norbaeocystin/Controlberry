@@ -64,7 +64,7 @@ def get_on_pin(name):
         GPIO.output(pin,GPIO.HIGH)
         running.append(name)
 
-def get_pin_off(name):
+def get_off_pin(name):
     '''
     turn off pin if name is in running
     '''
