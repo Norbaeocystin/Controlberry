@@ -22,6 +22,7 @@ from .temperature import run_every_interval
 from .pins import get_on_pin, get_off_pin
 import time
 from threading import Thread
+from .timer import setting_it_all
 
 from .distance import distance
 from .LED import running, get_light, get_light_stop
@@ -56,6 +57,7 @@ Commands = db.Commands
 Settings = db.Settings
 Distance = db.Distance
 Pictures = db.Pictures
+Schedule = db.Schedule
 
 for item in ['Commands','Temperature', 'Adafruit', 'Distance','Pictures']:
     try:
@@ -64,8 +66,8 @@ for item in ['Commands','Temperature', 'Adafruit', 'Distance','Pictures']:
                 db.command({"convertToCapped": item, "size": 100000000});
                 logger.info('{} changed to capped collection'.format(item))
             else:
-               db.command({"convertToCapped": item, "size": 30000000});
-               logger.info('{} changed to capped collection'.format(item)) 
+                db.command({"convertToCapped": item, "size": 30000000});
+                logger.info('{} changed to capped collection'.format(item)) 
     except OperationFailure:
         pass
 
@@ -118,13 +120,33 @@ def watch_collection():
                 picture_bytes = get_image_as_bytes()
                 logger.info('Picture taken for _id:{}'.format(_id))
                 Pictures.insert({'_id':_id,'PICTURE':picture_bytes, 'Timestamp':datetime.datetime.now()})
+                
+def watch_scheduling_collection():
+    '''
+    checking collection if there will be inserted document which have LED in it it will light up,
+    '''
+    logger.info('Starting watching Commands collection')
+    watcher = Schedule.watch()
+    for item in watcher:
+        doc = item.get('fullDocument')
+        if doc:
+            setting_it_all(doc)
+
 
 def run():
+    sched = Schedule.find_one()
+    if sched:
+        setting_it_all(sched)
     no_arg(watch_collection)
+    no_arg(watch_scheduling_collection)
     no_arg(run_every_interval)
     no_arg(run_every_interval_adafruit)
 
 if __name__ == '__main__':
+    sched = Schedule.find_one()
+    if sched:
+        setting_it_all(sched)
+    no_arg(watch_scheduling_collection)
     no_arg(watch_collection)
     no_arg(run_every_interval)
     no_arg(run_every_interval_adafruit)
