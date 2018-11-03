@@ -1,5 +1,5 @@
 '''
-For control of LEDs, LED stripes
+For control of LEDs, LED stripes and anything else by pwm function
 
 {'Command':'LED',
 'Brightness':100,
