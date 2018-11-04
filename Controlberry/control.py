@@ -18,7 +18,7 @@ how to construct JSON to control Raspberry pi
 import datetime
 import json
 import logging
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 from pymongo.errors import OperationFailure
 import RPi.GPIO as GPIO
 from .adafruit import run_every_interval_adafruit
@@ -65,11 +65,14 @@ Distance = db.Distance
 Pictures = db.Pictures
 Schedule = db.Schedule
 
-for item in ['Commands','Temperature', 'Adafruit', 'Distance','Pictures']:
+for item in ['Commands','Temperature', 'Adafruit', 'Distance','Pictures', 'Schedule']:
     try:
         if not db.command('collstats',item).get('capped', False):
             if item=='Pictures':
                 db.command({"convertToCapped": item, "size": 100000000});
+                logger.info('{} changed to capped collection'.format(item))
+            elif item=='Schedule':
+                db.command({"convertToCapped": item, "size": 1000000});
                 logger.info('{} changed to capped collection'.format(item))
             else:
                 db.command({"convertToCapped": item, "size": 30000000});
@@ -218,9 +221,11 @@ def setting_it_all(ScheduleJson):
         
 def run():
     run_scheduler_forever()
-    sched = Schedule.find_one({'_id':0})
-    if sched:
+    try:
+        sched = Schedule.find().sort('_id',DESCENDING).next()
         setting_it_all(sched)
+    except StopIteration:
+        pass
     no_arg(watch_scheduling_collection)
     no_arg(watch_collection)
     no_arg(run_every_interval)
@@ -228,9 +233,11 @@ def run():
 
 if __name__ == '__main__':
     run_scheduler_forever()
-    sched = Schedule.find_one({'_id':0})
-    if sched:
+    try:
+        sched = Schedule.find().sort('_id',DESCENDING).next()
         setting_it_all(sched)
+    except StopIteration:
+        pass
     no_arg(watch_scheduling_collection)
     no_arg(watch_collection)
     no_arg(run_every_interval)
