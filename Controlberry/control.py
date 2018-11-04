@@ -137,7 +137,7 @@ def watch_scheduling_collection():
         doc = item.get('fullDocument')
         if doc:
             logger.info('Changes to Schedule collection')
-            setting_it_all(doc, schedule = schedule)
+            setting_it_all(doc,)
             
 
 def run_threaded(func):
