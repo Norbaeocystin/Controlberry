@@ -179,14 +179,7 @@ def run_scheduler():
     while True:
         schedule.run_pending()
         time.sleep(1)
-            
-def run_scheduler_forever():
-    '''
-    starts running scheduler
-    '''
-    run_threaded(run_scheduler)
-    
-            
+                        
 def clear_schedule():
     '''
     clear all jobs in schedule class
@@ -220,7 +213,8 @@ def setting_it_all(ScheduleJson):
         logger.info('Schedule setup for {}'.format(item))
         
 def run():
-    run_scheduler_forever()
+    t = Thread(target = run_scheduler)
+    t.start()
     try:
         sched = Schedule.find().sort('_id',DESCENDING).next()
         setting_it_all(sched)
@@ -232,7 +226,8 @@ def run():
     no_arg(run_every_interval_adafruit)
 
 if __name__ == '__main__':
-    run_scheduler_forever()
+    t = Thread(target = run_scheduler)
+    t.start()
     try:
         sched = Schedule.find().sort('_id',DESCENDING).next()
         setting_it_all(sched)
