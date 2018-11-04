@@ -124,6 +124,9 @@ def watch_collection():
                 dist = distance(doc.get('Name'))
                 logger.info('Distance: {} for _id:{}'.format(dist, _id))
                 Distance.insert({'_id':_id,'DISTANCE':dist})
+            if doc.get('Command') == 'CLEAR':
+                logger.info('Clear schedule command received')
+                clear_schedule()
             if doc.get('Command') == 'CAMERA':
                 logger.info('Camera command received')
                 picture_bytes = get_image_as_bytes()
