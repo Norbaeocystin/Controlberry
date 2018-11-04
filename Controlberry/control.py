@@ -178,14 +178,14 @@ def delete_schedule(tags):
         if set(tags).issubset(item.tags):
             schedule.cancel_job(item)
             
-class ScheduleThread(threading.Thread):
+class ScheduleThread(Thread):
     def __init__(self, *pargs, **kwargs):
         super().__init__(*pargs, daemon=True, name="scheduler", **kwargs)
 
     def run(self):
         while True:
             schedule.run_pending()
-            time.sleep(schedule.idle_seconds())
+            time.sleep(1)
 
 def clear_schedule():
     '''
