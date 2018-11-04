@@ -130,7 +130,7 @@ def watch_scheduling_collection():
     for item in watcher:
         doc = item.get('fullDocument')
         if doc:
-            setting_it_all(doc)
+            setting_it_all(doc, schedule = schedule)
             
 def scheduler_():
     while True:
@@ -146,7 +146,7 @@ def run():
     run_scheduler_forever()
     sched = Schedule.find_one()
     if sched:
-        setting_it_all(sched)
+        setting_it_all(sched, schedule = schedule)
     no_arg(watch_collection)
     no_arg(watch_scheduling_collection)
     no_arg(run_every_interval)
