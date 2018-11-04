@@ -5,6 +5,12 @@ how to construct JSON to control Raspberry pi
  'Name':<string>;
  'Brightness':<int>;
  'State':<boolean>
+ }
+ 
+ How to construct Scheduler:
+{'PinName_1_':{'On':10:36','Off':11:20},
+'PinName_2_:{'On':10:20','Off':11:30},
+'LedName_1_':{'On':10:20','Off':11:30,'Brigthness':50}
 }
  
  
@@ -22,7 +28,6 @@ from .pins import get_on_pin, get_off_pin
 import schedule
 import time
 from threading import Thread
-from .timer import setting_it_all
 
 from .distance import distance
 from .LED import running, get_light, get_light_stop
@@ -134,24 +139,84 @@ def watch_scheduling_collection():
             setting_it_all(doc, schedule = schedule)
             
 
-def run():
-    sched = Schedule.find_one()
-    if sched:
-        setting_it_all(sched, schedule = schedule)
-    no_arg(watch_collection)
-    no_arg(watch_scheduling_collection)
-    no_arg(run_every_interval)
-    no_arg(run_every_interval_adafruit)
+def run_threaded(func):
+    '''
+    run funcion in non blocking way
+    '''
+    job_thread = Thread(target = func)
+    job_thread.start()
+
+def set_schedule(func, time, tags, arguments):
+    '''
+    function to set schedule for every day
     
-def run_forever():
+    ===========
+    parameters:
+    
+    func: <function object>
+    time: <string>  for example in shape '10:23' 'hh:mm'
+    tags: <tuple> tuple of strings for example 'adafruit', '10:23'
+    args: <tuple> tuple of arguments for feeding function
+    '''
+    f = partial(func, *arguments)
+    s = schedule.every().day.at(time).do(run_threaded, f)
+    s.tags = tags
+
+def delete_schedule(tags):
+    '''
+    will delete scheduling functions by finding tags in schedule.jobs
+    better to use name and time in tags tuple
+    '''
+    for item in schedule.jobs :
+        if set(tags).issubset(item.tags):
+            schedule.cancel_job(item)
+            
+def run_scheduler():
     while True:
-        schedule.next_run()
+        schedule.run_pending()
         time.sleep(1)
-        
-t = Thread(target = run_forever)
-t.start()
+            
+def run_scheduler_forever():
+    '''
+    starts running scheduler
+    '''
+    run_threaded(run_scheduler)
+    
+            
+def clear_schedule():
+    '''
+    clear all jobs in schedule class
+    '''
+    schedule.clear()
+    
+def setting_it_all(ScheduleJson):
+    '''
+    input is json, first scheduler will be cleared after that 
+    setup happens
+    '''
+    clear_schedule()
+    keys = list(ScheduleJson.keys())
+    pins = [item for item in keys if 'PinName' in item]
+    leds = [item for item in keys if 'LedName' in item]
+    for item in pins:
+        time_on = ScheduleJson[item]['On']
+        time_off = ScheduleJson[item]['Off']
+        set_schedule(get_on_pin, time_on, [item, time_on], [item] )
+        set_schedule(get_off_pin, time_off, [item, time_off], [item] )
+        logger.info('Schedule setup for {}'.format(item))
+    for item in leds:
+        time_on = ScheduleJson[item]['On']
+        time_off = ScheduleJson[item]['Off']
+        brightness = ScheduleJson[item].get('Brightness', 100)
+        def off_on(item, brightness):
+            get_light_stop(item)
+            get_light(item, brightness)
+        set_schedule(off_on, time_on, [item, time_on], [item, brightness] )
+        set_schedule(get_light_stop, time_off, [item, time_off], [name])
+        logger.info('Schedule setup for {}'.format(item))
 
 if __name__ == '__main__':
+    run_scheduler_forever()
     sched = Schedule.find_one({'_id':0})
     if sched:
         setting_it_all(sched)
