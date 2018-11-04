@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="controlberry",
     install_requires=["pymongo","Adafruit_DHT","dnspython","picamera", 'schedule'],
-    version="0.0.1",
+    version="0.10.1",
     author="Rastislav_Baran",
     author_email="baranrastislav@gmail.com",
     description="Package which needs to be installed on Raspberry Pi 3 to control Raspberry Pi 3 by MongoDB ",
