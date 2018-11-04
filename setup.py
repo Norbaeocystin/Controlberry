@@ -12,7 +12,7 @@ setuptools.setup(
     description="Package which needs to be installed on Raspberry Pi 3 to control Raspberry Pi 3 by MongoDB ",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    data_files = [('', ['Config/*.json'])],
+    package_data={'Controlberry': ['Config/*.json']},
     entry_points={'console_scripts':['controlberry = Controlberry.control:run']},
     url="",
     packages=setuptools.find_packages(),
