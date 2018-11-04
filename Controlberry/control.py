@@ -213,7 +213,7 @@ def setting_it_all(ScheduleJson):
             get_light_stop(item)
             get_light(item, brightness)
         set_schedule(off_on, time_on, [item, time_on], [item, brightness] )
-        set_schedule(get_light_stop, time_off, [item, time_off], [name])
+        set_schedule(get_light_stop, time_off, [item, time_off], [item])
         logger.info('Schedule setup for {}'.format(item))
         
 def run():
