@@ -214,6 +214,16 @@ def setting_it_all(ScheduleJson):
         set_schedule(off_on, time_on, [item, time_on], [item, brightness] )
         set_schedule(get_light_stop, time_off, [item, time_off], [name])
         logger.info('Schedule setup for {}'.format(item))
+        
+def run():
+    run_scheduler_forever()
+    sched = Schedule.find_one({'_id':0})
+    if sched:
+        setting_it_all(sched)
+    no_arg(watch_scheduling_collection)
+    no_arg(watch_collection)
+    no_arg(run_every_interval)
+    no_arg(run_every_interval_adafruit)
 
 if __name__ == '__main__':
     run_scheduler_forever()
