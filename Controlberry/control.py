@@ -175,11 +175,15 @@ def delete_schedule(tags):
         if set(tags).issubset(item.tags):
             schedule.cancel_job(item)
             
-def run_scheduler():
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-                        
+class ScheduleThread(threading.Thread):
+    def __init__(self, *pargs, **kwargs):
+        super().__init__(*pargs, daemon=True, name="scheduler", **kwargs)
+
+    def run(self):
+        while True:
+            schedule.run_pending()
+            time.sleep(schedule.idle_seconds())
+
 def clear_schedule():
     '''
     clear all jobs in schedule class
@@ -213,8 +217,7 @@ def setting_it_all(ScheduleJson):
         logger.info('Schedule setup for {}'.format(item))
         
 def run():
-    t = Thread(target = run_scheduler)
-    t.start()
+    ScheduleThread().start()
     try:
         sched = Schedule.find().sort('_id',DESCENDING).next()
         setting_it_all(sched)
@@ -226,8 +229,7 @@ def run():
     no_arg(run_every_interval_adafruit)
 
 if __name__ == '__main__':
-    t = Thread(target = run_scheduler)
-    t.start()
+    ScheduleThread().start()
     try:
         sched = Schedule.find().sort('_id',DESCENDING).next()
         setting_it_all(sched)
