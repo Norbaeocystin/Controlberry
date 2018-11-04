@@ -205,6 +205,7 @@ def setting_it_all(ScheduleJson):
     for item in pins:
         time_on = ScheduleJson[item]['On']
         time_off = ScheduleJson[item]['Off']
+        item = item.split('__Pin__')[-1]
         set_schedule(get_on_pin, time_on, [item, time_on], [item] )
         set_schedule(get_off_pin, time_off, [item, time_off], [item] )
         logger.info('Schedule setup for {}'.format(item))
@@ -212,6 +213,7 @@ def setting_it_all(ScheduleJson):
         time_on = ScheduleJson[item]['On']
         time_off = ScheduleJson[item]['Off']
         brightness = int(ScheduleJson[item].get('Brightness', 100))
+        item = item.split('__Led__')[-1]
         def off_on(item, brightness):
             get_light_stop(item)
             get_light(item, brightness)
