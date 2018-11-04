@@ -27,6 +27,7 @@ from .temperature import run_every_interval
 from .pins import get_on_pin, get_off_pin
 import schedule
 import time
+from functools import partial
 from threading import Thread
 
 from .distance import distance
