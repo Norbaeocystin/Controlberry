@@ -8,10 +8,12 @@ how to construct JSON to control Raspberry pi
  }
  
  How to construct Scheduler:
-{'PinName_1_':{'On':10:36','Off':11:20},
-'PinName_2_:{'On':10:20','Off':11:30},
-'LedName_1_':{'On':10:20','Off':11:30,'Brigthness':50}
+{'PinName_1_':{'On':'10:36','Off':'11:20'},
+'PinName_2_:{'On':'10:20','Off':'11:30'},
+'LedName_1_':{'On':'10:20','Off':'11:30','Brigthness':50}
 }
+From JS calling api there is part on the beggining 1__Pin__PinName_1_
+                                                   1__Led__LedName_1_
  
  
 '''
