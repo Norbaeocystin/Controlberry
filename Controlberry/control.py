@@ -211,7 +211,7 @@ def setting_it_all(ScheduleJson):
     for item in leds:
         time_on = ScheduleJson[item]['On']
         time_off = ScheduleJson[item]['Off']
-        brightness = ScheduleJson[item].get('Brightness', 100)
+        brightness = int(ScheduleJson[item].get('Brightness', 100))
         def off_on(item, brightness):
             get_light_stop(item)
             get_light(item, brightness)
