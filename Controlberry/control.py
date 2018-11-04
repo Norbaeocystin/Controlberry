@@ -130,20 +130,11 @@ def watch_scheduling_collection():
     for item in watcher:
         doc = item.get('fullDocument')
         if doc:
+            logger.info('Changes to Schedule collection')
             setting_it_all(doc, schedule = schedule)
             
-def scheduler_():
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-    
-def run_scheduler_forever():
-    t = Thread(target = scheduler_)
-    t.start()
-
 
 def run():
-    run_scheduler_forever()
     sched = Schedule.find_one()
     if sched:
         setting_it_all(sched, schedule = schedule)
@@ -151,10 +142,17 @@ def run():
     no_arg(watch_scheduling_collection)
     no_arg(run_every_interval)
     no_arg(run_every_interval_adafruit)
+    
+def run_forever():
+    while True:
+        schedule.next_run()
+        time.sleep(1)
+        
+t = Thread(target = run_forever)
+t.start()
 
 if __name__ == '__main__':
-    run_scheduler_forever()
-    sched = Schedule.find_one()
+    sched = Schedule.find_one({'_id':0})
     if sched:
         setting_it_all(sched)
     no_arg(watch_scheduling_collection)
