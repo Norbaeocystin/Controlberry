@@ -1,7 +1,5 @@
 import smbus
 
-bus = smbus.SMBus(1)
-
 OPERATIONS = {"+":"__add__","/":'__rtruediv__', "-":"__sub__", "x":"__rmul__", 
 	"^":"__rxor__","<<":"__rlshift__", ">>":"__rshift__" }
 
